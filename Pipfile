@@ -5,6 +5,8 @@ name = "pypi"
 
 [packages]
 fastapi = "*"
+uvicorn = "*"
+cd = "*"
 
 [dev-packages]
 black = "*"
