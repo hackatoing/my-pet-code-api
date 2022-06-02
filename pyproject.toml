@@ -1,0 +1,47 @@
+[tool.poetry]
+name = "my-pet-code-api"
+version = "0.1.0"
+description = "Backend application for My Pet Code project."
+authors = ["Guilherme Vicentin <gvicentin@ciandt.com>", "Kaleb Roncatti <kalebr@gmail.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+fastapi = "^0.78.0"
+uvicorn = "^0.17.6"
+
+[tool.poetry.dev-dependencies]
+black = "^22.3.0"
+flake8 = "^4.0.1"
+isort = "^5.10.1"
+pytest = "^7.1.2"
+flakeheaven = "^1.0.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.isort]
+src_paths = ["app", "tests"]
+
+[tool.black]
+line-length = 88
+target-version = ['py38']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  | .venv
+)/
+'''
+
+[tool.flakeheaven]
+# optionally inherit from remote config (or local if you want)
+base = "https://raw.githubusercontent.com/flakeheaven/flakeheaven/main/pyproject.toml"
+# specify any flake8 options. For example, exclude "example.py":
+exclude = [".venv/"]
+# make output nice
+format = "grouped"
+# 80 chars aren't enough in 21 century
+max_line_length = 88
+# show line of source code in output
+show_source = true
