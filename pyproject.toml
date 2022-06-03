@@ -9,6 +9,7 @@ license = "MIT"
 python = "^3.8"
 fastapi = "^0.78.0"
 uvicorn = "^0.17.6"
+loguru = "^0.6.0"
 
 [tool.poetry.dev-dependencies]
 black = "^22.3.0"

@@ -4,9 +4,9 @@
 ##
 ##  Script to be used to initialize the databases for the project. 
 ##	To use it we need to set $POSTGRES_CUSTOM_MULTI_DB with all the
-##	databases we want to create separeted by ',' e.g.:
+##  databases we want to create separeted by ',' e.g.:
 ##
-##	'export POSTGRES_CUSTOM_MULTI_DB=dev,test'.
+##  'export POSTGRES_CUSTOM_MULTI_DB=dev,test'.
 
 # bash default parameters
 set -o errexit  # make your script exit when a command fails
