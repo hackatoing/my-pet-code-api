@@ -3,7 +3,7 @@
 ##  postgres-create-databases.sh
 ##
 ##  Script to be used to initialize the databases for the project. 
-##	To use it we need to set $POSTGRES_CUSTOM_MULTI_DB with all the
+##  To use it we need to set $POSTGRES_CUSTOM_MULTI_DB with all the
 ##  databases we want to create separeted by ',' e.g.:
 ##
 ##  'export POSTGRES_CUSTOM_MULTI_DB=dev,test'.
