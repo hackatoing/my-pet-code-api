@@ -1,0 +1,51 @@
+version: 3
+
+tasks:
+  init:
+    desc: "Init Python project."
+    env:
+      # Create .venv inside project directory.
+      # It helps with moving/renaming the project, also with IDEs.
+      POETRY_VIRTUALENVS_IN_PROJECT: true
+    cmds:
+      - poetry install
+
+  format:
+    desc: "Apply formatting to python files following best practices."
+    cmds:
+      - poetry run isort .
+      - poetry run black .
+
+  lint:
+    desc: "Linter for Python - does not apply changes."
+    cmds:
+      - poetry run isort --check .
+      - poetry run black --check .
+      - poetry run flakeheaven lint
+
+  tests:
+    desc: "Run all the tests."
+    cmds:
+      - |
+        export $(grep -v '^#' local/dotenvs/test.env | xargs) \
+          && poetry run pytest tests
+
+  run:
+    desc: "Run app locally."
+    cmds:
+      - docker-compose -f local/docker-compose.yaml up -d
+      - |
+        export $(grep -v '^#' local/dotenvs/dev.env | xargs) \
+          && poetry run uvicorn app.main:create_app --factory --reload
+  
+  down:
+    desc: "Stop local dependencies"
+    cmds:
+      - docker-compose -f local/docker-compose.yaml down
+
+  clean:
+    desc: "Clean project"
+    cmds:
+      - find . -name "*.pyc" | xargs rm --recursive --force
+      - find . -name "__pycache__" | xargs rm --recursive --force
+      - find . -name ".pytest_cache" | xargs rm --recursive --force

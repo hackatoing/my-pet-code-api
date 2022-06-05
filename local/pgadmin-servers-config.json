@@ -1,0 +1,24 @@
+{
+    "Servers": {
+        "1": {
+            "Name": "My Pet Code Development Database",
+            "Group": "My Pet Code",
+            "Port": 5432,
+            "Username": "postgres",
+            "Host": "postgres",
+            "SSLMode": "prefer",
+            "MaintenanceDB": "postgres",
+            "PassFile": "/dev.pgpass"
+        },
+        "2": {
+            "Name": "My Pet Code Testing Database",
+            "Group": "My Pet Code",
+            "Port": 5432,
+            "Username": "postgres",
+            "Host": "postgres",
+            "SSLMode": "prefer",
+            "MaintenanceDB": "postgres",
+            "PassFile": "/test.pgpass"
+        }
+    }
+}
