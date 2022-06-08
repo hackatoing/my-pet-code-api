@@ -1,0 +1,39 @@
+// Creating tables
+Table users {
+  id int [pk, increment] // auto-increment
+  full_name varchar
+  email varchar
+  password varchar
+  created_at datetime
+  created_ip varchar
+}
+
+Table pets {
+  id int [pk, increment]
+  name varchar
+  user_id int
+  breed_id varchar
+  created_at datetime
+  created_ip varchar
+ }
+ 
+ 
+Table species {
+  id int [pk, increment]
+  name varchar
+  
+ }
+
+
+Table breed {
+  id int [pk, increment]
+  species_id varchar
+  name varchar
+  Indexes {
+    (species_id, name) [pk]
+  }
+ }
+
+ Ref: pets.user_id > users.id 
+ Ref: breed.species_id > species.id
+ Ref: pets.breed_id > breed.id
