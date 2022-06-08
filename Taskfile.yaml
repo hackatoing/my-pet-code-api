@@ -33,7 +33,7 @@ tasks:
   run:
     desc: "Run app locally."
     cmds:
-      - docker-compose -f local/docker-compose.yaml up -d
+      - docker compose -f local/docker-compose.yaml up -d
       - |
         export $(grep -v '^#' local/dotenvs/dev.env | xargs) \
           && poetry run uvicorn app.main:create_app --factory --reload
@@ -41,7 +41,7 @@ tasks:
   down:
     desc: "Stop local dependencies"
     cmds:
-      - docker-compose -f local/docker-compose.yaml down
+      - docker compose -f local/docker-compose.yaml down
 
   clean:
     desc: "Clean project"
