@@ -22,6 +22,22 @@ tasks:
       - poetry run isort --check .
       - poetry run black --check .
       - poetry run flakeheaven lint
+  
+  deps-up:
+    desc: "Init local dependencies for development"
+    cmds:
+      - docker compose -f local/docker-compose.yaml up -d
+      - |
+        export $(grep -v '^#' local/dotenvs/dev.env | xargs) \
+          && poetry run alembic upgrade head
+      - |
+        export $(grep -v '^#' local/dotenvs/test.env | xargs) \
+          && poetry run alembic upgrade head
+
+  deps-down:
+    desc: "Stop local dependencies"
+    cmds:
+      - docker compose -f local/docker-compose.yaml down
 
   tests:
     desc: "Run all the tests."
@@ -33,16 +49,10 @@ tasks:
   run:
     desc: "Run app locally."
     cmds:
-      - docker compose -f local/docker-compose.yaml up -d
       - |
         export $(grep -v '^#' local/dotenvs/dev.env | xargs) \
           && poetry run uvicorn app.main:create_app --factory --reload
   
-  down:
-    desc: "Stop local dependencies"
-    cmds:
-      - docker compose -f local/docker-compose.yaml down
-
   clean:
     desc: "Clean project"
     cmds:

@@ -11,6 +11,8 @@ fastapi = "^0.78.0"
 uvicorn = "^0.17.6"
 loguru = "^0.6.0"
 SQLAlchemy = "^1.4.37"
+alembic = "^1.8.0"
+psycopg2 = "^2.9.3"
 
 [tool.poetry.dev-dependencies]
 black = "^22.3.0"
@@ -25,6 +27,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.isort]
 src_paths = ["app", "tests"]
+line_length=88
 
 [tool.black]
 line-length = 88
