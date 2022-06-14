@@ -1,5 +1,9 @@
 version: 3
 
+env:
+  DOTENV_DEV: local/dotenvs/dev.env
+  DOTENV_TEST: local/dotenvs/test.env
+
 tasks:
   init:
     desc: "Init Python project."
@@ -28,10 +32,10 @@ tasks:
     cmds:
       - docker compose -f local/docker-compose.yaml up -d
       - |
-        export $(grep -v '^#' local/dotenvs/dev.env | xargs) \
+        export $(grep -v '^#' {{ .DOTENV_DEV }} | xargs) \
           && poetry run alembic upgrade head
       - |
-        export $(grep -v '^#' local/dotenvs/test.env | xargs) \
+        export $(grep -v '^#' {{ .DOTENV_TEST }} | xargs) \
           && poetry run alembic upgrade head
 
   deps-down:
@@ -43,14 +47,14 @@ tasks:
     desc: "Run all the tests."
     cmds:
       - |
-        export $(grep -v '^#' local/dotenvs/test.env | xargs) \
+        export $(grep -v '^#' {{ .DOTENV_TEST }} | xargs) \
           && poetry run pytest tests
 
   run:
     desc: "Run app locally."
     cmds:
       - |
-        export $(grep -v '^#' local/dotenvs/dev.env | xargs) \
+        export $(grep -v '^#' {{ .DOTENV_DEV }} | xargs) \
           && poetry run uvicorn app.main:create_app --factory --reload
   
   clean:
