@@ -1,5 +1,9 @@
 version: 3
 
+env:
+  DOTENV_DEV: local/dotenvs/dev.env
+  DOTENV_TEST: local/dotenvs/test.env
+
 tasks:
   init:
     desc: "Init Python project."
@@ -22,27 +26,47 @@ tasks:
       - poetry run isort --check .
       - poetry run black --check .
       - poetry run flakeheaven lint
+  
+  deps-up:
+    desc: "Init local dependencies for development"
+    cmds:
+      - docker compose -f local/docker-compose.yaml up -d
+      - |
+        export $(grep -v '^#' {{ .DOTENV_DEV }} | xargs) \
+          && poetry run alembic upgrade head
+      - |
+        export $(grep -v '^#' {{ .DOTENV_TEST }} | xargs) \
+          && poetry run alembic upgrade head
+
+  deps-down:
+    desc: "Stop local dependencies"
+    cmds:
+      - docker compose -f local/docker-compose.yaml down
+  
+  db-downgrade:
+    desc: "Downgrade database to base"
+    cmds:
+      - |
+        export $(grep -v '^#' {{ .DOTENV_DEV }} | xargs) \
+          && poetry run alembic downgrade base
+      - |
+        export $(grep -v '^#' {{ .DOTENV_TEST }} | xargs) \
+          && poetry run alembic downgrade base
 
   tests:
     desc: "Run all the tests."
     cmds:
       - |
-        export $(grep -v '^#' local/dotenvs/test.env | xargs) \
+        export $(grep -v '^#' {{ .DOTENV_TEST }} | xargs) \
           && poetry run pytest tests
 
   run:
     desc: "Run app locally."
     cmds:
-      - docker-compose -f local/docker-compose.yaml up -d
       - |
-        export $(grep -v '^#' local/dotenvs/dev.env | xargs) \
+        export $(grep -v '^#' {{ .DOTENV_DEV }} | xargs) \
           && poetry run uvicorn app.main:create_app --factory --reload
   
-  down:
-    desc: "Stop local dependencies"
-    cmds:
-      - docker-compose -f local/docker-compose.yaml down
-
   clean:
     desc: "Clean project"
     cmds:
