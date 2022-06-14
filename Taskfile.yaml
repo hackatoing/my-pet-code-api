@@ -42,6 +42,16 @@ tasks:
     desc: "Stop local dependencies"
     cmds:
       - docker compose -f local/docker-compose.yaml down
+  
+  db-downgrade:
+    desc: "Downgrade database to base"
+    cmds:
+      - |
+        export $(grep -v '^#' {{ .DOTENV_DEV }} | xargs) \
+          && poetry run alembic downgrade base
+      - |
+        export $(grep -v '^#' {{ .DOTENV_TEST }} | xargs) \
+          && poetry run alembic downgrade base
 
   tests:
     desc: "Run all the tests."
