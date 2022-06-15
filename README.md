@@ -4,6 +4,13 @@ Backend for my pet code application.
 
 # Contribute
 
+## Dependencies
+TODO
+
+## Taskfile
+
+TODO
+
 ## Local database
 
 For local development it's deployed a **PostgreSQL** container with two databases, `development` and `test`.
