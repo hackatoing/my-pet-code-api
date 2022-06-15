@@ -24,8 +24,8 @@ class Breed(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(255), nullable=False)
     species_id = Column(Integer, ForeignKey("species.id"))
+    
     breed_pk = UniqueConstraint("name", "species_id")
-
     species = relationship("Species", back_populates="breed")
 
 
