@@ -1,7 +1,6 @@
 from pydantic import BaseModel
 
 
-
 class Species(BaseModel):
     id: int
     name: str
@@ -17,5 +16,3 @@ class Breed(BaseModel):
 
     class Config:
         orm_mode = True
-
-
