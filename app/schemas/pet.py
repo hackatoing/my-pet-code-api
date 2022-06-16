@@ -3,7 +3,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 
 from app.core.db import Base
-from app.schemas.user import User # noqa
+from app.schemas.user import User  # noqa
 
 
 class Pet(Base):
