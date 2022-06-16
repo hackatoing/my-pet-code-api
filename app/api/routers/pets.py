@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from pytest import Session
 
 from app.api.exceptions.exceptions import ItemNotFound
