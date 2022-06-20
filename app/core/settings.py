@@ -26,6 +26,8 @@ class Settings(BaseSettings):
     logging_level: int = logging.INFO
     loggers: Tuple[str, str] = ("uvicorn.error", "uvicorn.access")
 
+    api_prefix: str = "/api"
+
     @property
     def fastapi_kwargs(self) -> Dict[str, Any]:
         return {
