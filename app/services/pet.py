@@ -11,7 +11,7 @@ class BreedService:
         return db.query(Breed).offset(skip).limit(limit).all()
 
 
-class Species:
+class SpeciesService:
     def get_by_id(self, db: Session, id: int) -> Species:
         return db.query(Species).filter(Species.id == id).first()
 
