@@ -65,8 +65,13 @@ tasks:
     cmds:
       - |
         export $(grep -v '^#' {{ .DOTENV_DEV }} | xargs) \
-          && poetry run uvicorn app.main:create_app --factory --reload
+          && poetry run uvicorn app.main:create_app --factory --reload --host 0.0.0.0
   
+  docker-build:
+    desc: "Build application into Docker image"
+    cmds:
+      - echo "Building"
+
   clean:
     desc: "Clean project"
     cmds:

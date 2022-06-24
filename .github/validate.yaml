@@ -1,0 +1,52 @@
+name: "Pull Request Validate"
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: "Build"
+    runs-on: ubuntu-latest
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest,
+    # macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+
+    env:
+      TASK_VERSION: 3
+      PYTHON_VERSION: 3.8
+      POETRY_VERSION: 1.1.13
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Taskfile
+        uses: arduino/setup-task@v1
+        with:
+          version: ${{env.TASK_VERSION}}
+
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{env.PYTHON_VERSION}}
+
+      - name: Run image
+        uses: abatilo/actions-poetry@v2.0.0
+        with:
+          poetry-version: ${{env.POETRY_VERSION}}
+
+      - name: Poetry Install
+        run: task init
+
+      - name: Lint
+        run: task lint
+
+      - name: Test
+        run: task tests
+
+      - name: Docker build
+        run: task docker-build
