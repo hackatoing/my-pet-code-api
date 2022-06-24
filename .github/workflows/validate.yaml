@@ -34,7 +34,7 @@ jobs:
         with:
           python-version: ${{env.PYTHON_VERSION}}
 
-      - name: Run image
+      - name: Setup Poetry
         uses: abatilo/actions-poetry@v2.0.0
         with:
           poetry-version: ${{env.POETRY_VERSION}}
